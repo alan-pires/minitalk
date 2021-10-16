@@ -6,7 +6,7 @@
 /*   By: apires-d <apires-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 17:12:03 by apires-d          #+#    #+#             */
-/*   Updated: 2021/10/16 17:55:24 by apires-d         ###   ########.fr       */
+/*   Updated: 2021/10/16 18:47:28 by apires-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void		send_msg(char *msg, pid_t pid_server);
 static int		ft_atoi(const char *nptr);
-static void		handle_signal(int	sig);
+static void		handle_signal(int sig);
 
 int	g_server_confirm;
 
@@ -65,7 +65,7 @@ static void	send_msg(char *msg, pid_t pid_server)
 	}
 }
 
-static void	handle_signal(int	sig)
+static void	handle_signal(int sig)
 {
 	if (sig == SIGUSR1)
 		g_server_confirm = 1;
