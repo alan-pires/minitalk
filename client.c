@@ -6,7 +6,7 @@
 /*   By: apires-d <apires-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 17:12:03 by apires-d          #+#    #+#             */
-/*   Updated: 2021/10/16 16:53:52 by apires-d         ###   ########.fr       */
+/*   Updated: 2021/10/16 17:56:15 by apires-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,17 @@ static int	ft_atoi(const char *nptr);
 
 int	main(int argc, char **argv)
 {
-	int	pid_server;
-
 	if (argc != 3)
 	{
 		write(2, "Usage: ./client PID MESSAGE\n", 28);
 		return (1);
 	}
-	pid_server = ft_atoi(argv[1]);
-	if (pid_server < 0)
+	if (ft_atoi(argv[1]) < 0)
 	{
 		write(2, "Unknow PID\n", 11);
 		return (1);
 	}
-	send_msg(argv[2], pid_server);
+	send_msg(argv[2], ft_atoi(argv[1]));
 	return (0);
 }
 

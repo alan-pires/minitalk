@@ -6,7 +6,7 @@
 /*   By: apires-d <apires-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 17:12:03 by apires-d          #+#    #+#             */
-/*   Updated: 2021/10/16 16:56:20 by apires-d         ###   ########.fr       */
+/*   Updated: 2021/10/16 17:55:24 by apires-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,29 @@ static void		send_msg(char *msg, pid_t pid_server);
 static int		ft_atoi(const char *nptr);
 static void		handle_signal(int	sig);
 
+int	g_server_confirm;
+
 int	main(int argc, char **argv)
 {
-	int	pid_server;
-
+	g_server_confirm = 1;
 	if (argc != 3)
 	{
 		write(2, "Usage: ./client PID MESSAGE\n", 28);
 		return (1);
 	}
-	pid_server = ft_atoi(argv[1]);
-	if (pid_server < 0)
+	if (ft_atoi(argv[1]) < 0)
 	{
 		write(2, "Unknow PID\n", 11);
 		return (1);
 	}
 	signal(SIGUSR1, handle_signal);
-	send_msg(argv[2], pid_server);
+	if (g_server_confirm == 1)
+	{
+		send_msg(argv[2], ft_atoi(argv[1]));
+		g_server_confirm = 0;
+	}
+	while (42)
+		pause();
 	return (0);
 }
 
@@ -45,12 +51,15 @@ static void	send_msg(char *msg, pid_t pid_server)
 		aux = 0;
 		while (aux < 8)
 		{
-			if (*msg & (128 >> aux))
-				kill(pid_server, SIGUSR1);
-			else
-				kill(pid_server, SIGUSR2);
-			aux++;
-			sleep(1);
+			if (signal(SIGUSR1, handle_signal))
+			{
+				if (*msg & (128 >> aux))
+					kill(pid_server, SIGUSR1);
+				else
+					kill(pid_server, SIGUSR2);
+				aux++;
+				usleep(3000);
+			}
 		}
 		msg++;
 	}
@@ -58,7 +67,8 @@ static void	send_msg(char *msg, pid_t pid_server)
 
 static void	handle_signal(int	sig)
 {
-	(void)sig;
+	if (sig == SIGUSR1)
+		g_server_confirm = 1;
 }
 
 static int	ft_atoi(const char *nptr)
