@@ -6,7 +6,7 @@
 /*   By: apires-d <apires-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 17:12:03 by apires-d          #+#    #+#             */
-/*   Updated: 2021/10/16 19:12:52 by apires-d         ###   ########.fr       */
+/*   Updated: 2021/10/16 19:15:40 by apires-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	send_msg(char *msg, pid_t pid_server)
 				else
 					kill(pid_server, SIGUSR2);
 				aux++;
-				usleep(5000);
+				usleep(10000);
 			}
 		}
 		msg++;
