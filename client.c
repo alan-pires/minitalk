@@ -6,14 +6,14 @@
 /*   By: apires-d <apires-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 17:12:03 by apires-d          #+#    #+#             */
-/*   Updated: 2021/10/15 23:47:04 by apires-d         ###   ########.fr       */
+/*   Updated: 2021/10/16 16:53:52 by apires-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static void		send_msg(char *msg, pid_t pid_server);
-static int		ft_atoi(const char *nptr);
+static void	send_msg(char *msg, pid_t pid_server);
+static int	ft_atoi(const char *nptr);
 
 int	main(int argc, char **argv)
 {

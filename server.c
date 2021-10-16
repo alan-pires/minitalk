@@ -6,39 +6,35 @@
 /*   By: apires-d <apires-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 17:12:27 by apires-d          #+#    #+#             */
-/*   Updated: 2021/10/15 22:56:34 by apires-d         ###   ########.fr       */
+/*   Updated: 2021/10/16 16:45:56 by apires-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static void	handle_sig(int sig, siginfo_t *siginfo, void *unused);
+static void	handle_sig(int sig);
 static void	ft_putnbr(int n);
 
 int	main(void)
 {
-	struct sigaction	sa;
-	int					pid;
+	int	pid;
 
-	sa.sa_sigaction = handle_sig;
-	sa.sa_flags = SA_SIGINFO;
 	pid = getpid();
 	write(1, "Server listening on pid: ", 25);
 	ft_putnbr(pid);
 	write(1, "\n", 1);
-	if (sigaction(SIGUSR1, &sa, NULL) == -1 || sigaction(SIGUSR2, &sa, NULL))
-		return (-1);
+	signal(SIGUSR1, handle_sig);
+	signal(SIGUSR2, handle_sig);
 	while (42)
 		pause();
 	return (0);
 }
 
-static void	handle_sig(int sig, siginfo_t *siginfo, void *unused)
+static void	handle_sig(int sig)
 {
 	static int	character;
 	static int	bits;
 
-	(void)unused;
 	if (!bits)
 		bits = 128;
 	if (sig == SIGUSR1)
@@ -49,8 +45,6 @@ static void	handle_sig(int sig, siginfo_t *siginfo, void *unused)
 		write(1, &character, 1);
 		character = 0;
 	}
-	(void)siginfo;
-	//kill(siginfo->si_pid, SIGUSR1);
 }
 
 static void	ft_putnbr(int num)

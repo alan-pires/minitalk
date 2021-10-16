@@ -6,7 +6,7 @@
 /*   By: apires-d <apires-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 17:12:27 by apires-d          #+#    #+#             */
-/*   Updated: 2021/10/15 23:45:52 by apires-d         ###   ########.fr       */
+/*   Updated: 2021/10/16 16:36:48 by apires-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	main(void)
 	write(1, "Server listening on pid: ", 25);
 	ft_putnbr(pid);
 	write(1, "\n", 1);
-	if (sigaction(SIGUSR1, &sa, NULL) == -1 || sigaction(SIGUSR2, &sa, NULL))
+	if (sigaction(SIGUSR1, &sa, NULL) == -1 ||
+		sigaction(SIGUSR2, &sa, NULL) == -1)
 		return (-1);
 	while (42)
 		pause();
