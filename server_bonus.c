@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apires-d <apires-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 17:12:27 by apires-d          #+#    #+#             */
-/*   Updated: 2021/10/15 22:56:34 by apires-d         ###   ########.fr       */
+/*   Updated: 2021/10/15 23:45:52 by apires-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ static void	handle_sig(int sig, siginfo_t *siginfo, void *unused)
 		write(1, &character, 1);
 		character = 0;
 	}
-	(void)siginfo;
-	//kill(siginfo->si_pid, SIGUSR1);
+	kill(siginfo->si_pid, SIGUSR1);
 }
 
 static void	ft_putnbr(int num)

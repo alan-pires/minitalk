@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apires-d <apires-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 17:12:03 by apires-d          #+#    #+#             */
-/*   Updated: 2021/10/15 23:47:04 by apires-d         ###   ########.fr       */
+/*   Updated: 2021/10/15 23:44:38 by apires-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void		send_msg(char *msg, pid_t pid_server);
 static int		ft_atoi(const char *nptr);
+static void		handle_signal(int	sig);
 
 int	main(int argc, char **argv)
 {
@@ -30,6 +31,7 @@ int	main(int argc, char **argv)
 		write(2, "Unknow PID\n", 11);
 		return (1);
 	}
+	signal(SIGUSR1, handle_signal);
 	send_msg(argv[2], pid_server);
 	return (0);
 }
@@ -48,10 +50,15 @@ static void	send_msg(char *msg, pid_t pid_server)
 			else
 				kill(pid_server, SIGUSR2);
 			aux++;
-			usleep(3000);
+			sleep(1);
 		}
 		msg++;
 	}
+}
+
+static void	handle_signal(int	sig)
+{
+	(void)sig;
 }
 
 static int	ft_atoi(const char *nptr)
